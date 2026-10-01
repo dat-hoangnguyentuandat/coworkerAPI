@@ -1,0 +1,260 @@
+/* ============================================================
+   Coworker Docs — documentation theme (sidebar + TOC + callouts)
+   ============================================================ */
+
+.docs-body { display: block; }
+
+.docs-shell {
+  display: grid;
+  grid-template-columns: 264px minmax(0, 1fr);
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 28px;
+  gap: 48px;
+}
+
+/* ── Sidebar ────────────────────────────────────────────── */
+
+.docs-sidebar {
+  position: sticky;
+  top: 74px;
+  align-self: start;
+  max-height: calc(100vh - 98px);
+  overflow-y: auto;
+  padding: 30px 8px 40px 0;
+  font-size: 14px;
+  scrollbar-width: thin;
+}
+.docs-sidebar .sb-group { margin-bottom: 24px; }
+.docs-sidebar .sb-group > b {
+  display: block;
+  font-size: 11.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--faint);
+  padding: 0 10px;
+  margin-bottom: 6px;
+}
+.docs-sidebar a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 6.5px 10px;
+  border-radius: 7px;
+  color: var(--muted);
+  font-weight: 520;
+  transition: color 0.12s, background 0.12s;
+}
+.docs-sidebar a:hover { color: var(--ink-heading); background: var(--surface-2); }
+.docs-sidebar a.active {
+  color: var(--accent);
+  background: var(--accent-soft);
+  font-weight: 620;
+}
+.docs-sidebar a .badge {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 1.5px 6px;
+  border-radius: 4px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  letter-spacing: 0.03em;
+}
+.docs-sidebar a .badge.new { background: color-mix(in srgb, var(--warm) 14%, transparent); color: var(--warm); }
+
+/* ── Main column ────────────────────────────────────────── */
+
+.docs-main { padding: 36px 0 90px; min-width: 0; max-width: 760px; }
+
+.docs-header { margin-bottom: 34px; padding-bottom: 22px; border-bottom: 1px solid var(--line); }
+.docs-header .eyebrow { margin-bottom: 10px; }
+.docs-header h1 { font-size: clamp(30px, 4vw, 40px); margin: 0 0 10px; line-height: 1.15; }
+.docs-header .desc { color: var(--muted); font-size: 16.5px; margin: 0; max-width: 620px; }
+
+.doc-section { margin: 44px 0; scroll-margin-top: 90px; }
+.doc-section h2 {
+  font-size: 24px;
+  margin: 0 0 14px;
+  padding-top: 10px;
+}
+.doc-section h3 { font-size: 18px; margin: 26px 0 10px; }
+.doc-section p { color: var(--ink); font-size: 15.5px; margin: 0 0 14px; }
+.doc-section ul, .doc-section ol { padding-left: 24px; margin: 0 0 16px; color: var(--ink); font-size: 15.5px; }
+.doc-section li { margin-bottom: 7px; }
+.doc-section li::marker { color: var(--accent); }
+.doc-section img { max-width: 100%; border-radius: 10px; border: 1px solid var(--line); }
+
+.doc-section table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+  margin: 6px 0 20px;
+}
+.doc-section th {
+  text-align: left;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--faint);
+  font-weight: 650;
+  border-bottom: 1px solid var(--line-strong);
+  padding: 9px 12px 9px 0;
+}
+.doc-section td { border-bottom: 1px solid var(--line); padding: 10px 12px 10px 0; vertical-align: top; }
+.doc-section td:first-child { font-weight: 550; white-space: nowrap; }
+
+/* ── Callouts ───────────────────────────────────────────── */
+
+.callout {
+  display: flex;
+  gap: 12px;
+  border: 1px solid var(--line);
+  border-left-width: 0;
+  border-radius: 9px;
+  padding: 14px 16px;
+  margin: 18px 0;
+  font-size: 14.5px;
+  background: var(--surface);
+  min-width: 0;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+.callout > div { min-width: 0; }
+.callout svg { flex: 0 0 auto; width: 17px; height: 17px; margin-top: 2px; }
+.callout b { display: block; margin-bottom: 3px; font-size: 13.5px; }
+.callout p { margin: 0; font-size: 14px; color: var(--muted); }
+.callout.info svg, .callout.info b { color: #3b82f6; }
+.callout.info { border-color: color-mix(in srgb, #3b82f6 25%, var(--line)); background: color-mix(in srgb, #3b82f6 6%, var(--surface)); }
+.callout.warn svg, .callout.warn b { color: var(--warn); }
+.callout.warn { border-color: color-mix(in srgb, var(--warn) 30%, var(--line)); background: color-mix(in srgb, var(--warn) 7%, var(--surface)); }
+.callout.danger svg, .callout.danger b { color: var(--danger); }
+.callout.danger { border-color: color-mix(in srgb, var(--danger) 30%, var(--line)); background: color-mix(in srgb, var(--danger) 6%, var(--surface)); }
+.callout.ok svg, .callout.ok b { color: var(--ok); }
+.callout.ok { border-color: color-mix(in srgb, var(--ok) 30%, var(--line)); background: color-mix(in srgb, var(--ok) 7%, var(--surface)); }
+
+/* ── Steps list in docs ─────────────────────────────────── */
+
+.doc-steps { counter-reset: docstep; display: grid; gap: 0; margin: 8px 0 18px; padding: 0; position: relative; }
+.doc-steps::before { display: none; }
+.doc-steps li {
+  list-style: none;
+  counter-increment: docstep;
+  display: block;
+  position: relative;
+  padding: 10px 0 10px 46px;
+}
+.doc-steps li:not(:last-child)::after {
+  display: none;
+}
+.doc-steps li::before {
+  content: counter(docstep);
+  position: absolute;
+  left: 0;
+  top: 12px;
+  width: 30px; height: 30px;
+  border-radius: 9px;
+  border: 1px solid var(--line-strong);
+  display: grid;
+  place-items: center;
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  color: var(--accent);
+  background: var(--surface);
+  z-index: 1;
+}
+.doc-steps li > p { margin: 0; }
+
+/* ── Keyboard keys ──────────────────────────────────────── */
+
+kbd {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  padding: 2.5px 7px;
+  border-radius: 6px;
+  border: 1px solid var(--line-strong);
+  border-bottom-width: 2px;
+  background: var(--surface);
+  color: var(--ink);
+  white-space: nowrap;
+}
+
+/* ── TOC (right rail) ───────────────────────────────────── */
+
+.docs-toc {
+  position: sticky;
+  top: 74px;
+  align-self: start;
+  width: 190px;
+  font-size: 13px;
+  padding: 40px 0 40px;
+}
+.docs-toc b {
+  display: block;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--faint);
+  margin-bottom: 8px;
+  font-weight: 700;
+}
+.docs-toc a {
+  display: block;
+  padding: 4px 0 4px 12px;
+  border-left: 2px solid var(--line);
+  color: var(--muted);
+  line-height: 1.45;
+}
+.docs-toc a:hover { color: var(--accent); }
+.docs-toc a.active { color: var(--accent); border-left-color: var(--accent); font-weight: 600; }
+
+/* ── Docs grid with TOC ─────────────────────────────────── */
+
+.docs-with-toc {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 190px;
+  gap: 48px;
+}
+.docs-with-toc > * { min-width: 0; }
+
+@media (max-width: 1080px) {
+  .docs-with-toc { grid-template-columns: 1fr; }
+  .docs-toc { display: none; }
+}
+@media (max-width: 900px) {
+  .docs-shell { grid-template-columns: 1fr; gap: 0; }
+  .docs-sidebar { position: static; max-height: none; border-bottom: 1px solid var(--line); padding: 20px 0; }
+}
+@media (max-width: 640px) {
+  /* Header: keep only brand + lang + theme on one row */
+  .site-nav a { display: none; }
+  .site-nav .lang-toggle { display: flex; }
+  .site-header-inner { gap: 12px; padding: 11px 16px; }
+  /* Tables: allow horizontal scroll inside a wrapper instead of the page */
+  .doc-section .table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .doc-section table { display: block; overflow-x: auto; white-space: nowrap; }
+  .doc-pager { grid-template-columns: 1fr; }
+}
+@media (max-width: 700px) { .docs-sidebar { display: none; } }
+
+/* ── Prev / next navigation ─────────────────────────────── */
+
+.doc-pager {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-top: 54px;
+  padding-top: 26px;
+  border-top: 1px solid var(--line);
+}
+.doc-pager a {
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 14px 16px;
+  transition: border-color 0.15s, background 0.15s;
+}
+.doc-pager a:hover { border-color: var(--accent); background: var(--accent-soft); }
+.doc-pager a.next { text-align: right; }
+.doc-pager a small { display: block; color: var(--faint); font-size: 11.5px; margin-bottom: 3px; }
+.doc-pager a b { color: var(--ink-heading); font-size: 14.5px; font-weight: 600; }

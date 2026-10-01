@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CoworkerAPI — ChatGPT qua endpoint của bạn</title>
+<meta name="description" content="Kết nối công cụ AI với ChatGPT qua gateway OpenAI-compatible và Anthropic-compatible. Chạy cục bộ, kết nối qua MCP, quản lý từ dashboard.">
+<meta name="theme-color" content="#f7f7f5">
+<link rel="icon" href="assets/img/coworker-logo.png">
+<link rel="stylesheet" href="assets/css/api.css">
+<script src="assets/js/api-site.js" defer></script>
+<script src="assets/js/api-motion.js" defer></script>
+<script src="assets/js/api-scroll.js" defer></script>
+</head>
+<body>
+<a class="skip-link" href="#main" data-copy="skip">Đi đến nội dung</a>
+<header class="topbar wrap">
+<a class="brand" href="./"><img src="assets/img/coworker-logo.png" alt="" width="36" height="36">CoworkerAPI</a>
+<a class="header-docs" href="docs/index.html" data-copy="docs">Tài liệu</a>
+</header>
+<main id="main">
+<section class="hero wrap">
+<div class="hero-meta"><span data-copy="category">Local gateway / MCP bridge</span><div class="controls"><label class="sr-only" for="language">Language</label><select id="language" data-language><option value="vi">Tiếng Việt</option><option value="en">English</option></select><button data-theme-toggle aria-label="Đổi chủ đề" class="theme-button"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M20 14A8 8 0 0 1 10 4a8 8 0 1 0 10 10Z"/></svg></button></div></div>
+<h1><span>ChatGPT.</span><span class="hero-line" data-copy="headline">Qua endpoint của bạn.</span></h1>
+<div class="hero-bottom"><span data-copy="protocols">OpenAI-compatible &amp; Anthropic-compatible</span><a href="#bridge" class="text-link" data-copy="explore">Khám phá luồng kết nối ↓</a></div>
+</section>
+<section class="intro wrap" id="bridge">
+<h2 data-copy="introTitle">Công cụ quen thuộc.<br>Một kết nối khác.</h2>
+<div><p class="lede" data-copy="intro">CoworkerAPI chuyển yêu cầu từ công cụ AI vào ChatGPT qua plugin/MCP, rồi trả câu trả lời về đúng giao thức của client. Chạy gateway trên máy bạn và cấu hình endpoint cùng API key.</p>
+<div class="actions"><a class="button primary" href="docs/quickstart.html" data-copy="start">Bắt đầu thiết lập</a><a class="text-link" href="https://github.com/dat-hoangnguyentuandat/coworkerAPI" data-copy="source">Xem mã nguồn ↗</a></div>
+<p class="small muted" data-copy="preview">Bridge widget hiện là tính năng thử nghiệm. Cần giữ hội thoại ChatGPT mở trong khi sử dụng.</p></div>
+</section>
+<section class="flow-section wrap" aria-labelledby="flow-title">
+<div class="section-head"><h2 id="flow-title" data-copy="flowTitle">Từ request đến response.</h2><p data-copy="flowDescription">Công cụ gọi gateway. ChatGPT xử lý. Kết quả trở về công cụ.</p></div>
+<div class="flow" role="list">
+<div role="listitem"><svg class="flow-symbol" viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8M12 17v4"/></svg><h3 data-copy="client">Client</h3><p>Claude Code · Codex CLI<br>OpenCode · Cursor · VS Code</p></div>
+<span class="connector" aria-hidden="true">⇄</span>
+<div role="listitem" class="gateway"><img src="assets/img/coworker-logo.png" alt="" width="40" height="40"><h3>CoworkerAPI</h3><p data-copy="gatewayDetail">Endpoint · API key<br>Queue · Protocol adapter</p></div>
+<span class="connector" aria-hidden="true">⇄</span>
+<div role="listitem"><span class="flow-symbol">⌘</span><h3>ChatGPT</h3><p data-copy="chatDetail">Plugin / MCP widget<br>workbench_api_submit</p></div>
+</div>
+<p class="flow-note" data-copy="flowNote">Tool calls được trả về client để thực thi. Gateway không tự chạy lệnh trên máy bạn.</p>
+</section>
+<section class="integration wrap" aria-labelledby="integration-title">
+<div class="integration-copy"><h2 id="integration-title" data-copy="integrationTitle">Chọn giao thức.<br>Giữ nguyên công cụ.</h2><p data-copy="integrationCopy">Sử dụng base URL và API key của CoworkerAPI trong phần custom provider. Client phải hỗ trợ giao thức tương ứng.</p><a href="docs/multi-account.html" class="text-link" data-copy="clientDocs">Hướng dẫn cấu hình client</a></div>
+<div class="protocol-demo">
+<div class="protocol-controls" role="group" aria-label="API protocol"><button data-protocol="anthropic" aria-pressed="true">Anthropic</button><button data-protocol="openai" aria-pressed="false">OpenAI</button><button class="copy-button" data-copy-code data-copy="copy">Sao chép</button></div>
+<p class="code-label" data-copy="example">Ví dụ cấu hình · localhost:3211</p>
+<pre class="code"><code id="protocol-code">{
+  "env": {
+    "ANTHROPIC_BASE_URL": "http://127.0.0.1:3211",
+    "ANTHROPIC_AUTH_TOKEN": "&lt;API_KEY&gt;",
+    "ANTHROPIC_MODEL": "chatgpt-web"
+  }
+}</code></pre><p id="copy-status" class="small muted" role="status" aria-live="polite"></p>
+</div>
+</section>
+<section class="management wrap">
+<div><h2 data-copy="manageTitle">Thiết lập và quan sát.<br>Trong một dashboard.</h2><p data-copy="manageCopy">Từ kết nối tunnel đến API key, trạng thái bridge và nhật ký request. Hướng dẫn tích hợp giúp bạn hoàn tất từng bước ngay trên trang quản trị.</p><a class="text-link" href="docs/index.html" data-copy="manageDocs">Đọc tài liệu</a></div>
+<dl class="specs"><div><dt data-copy="connection">Kết nối</dt><dd data-copy="connectionDesc">Tunnel form, plugin setup, bridge activation</dd></div><div><dt>API keys</dt><dd data-copy="keysDesc">Tạo key, thu hồi key, quản lý quyền truy cập gateway</dd></div><div><dt data-copy="observability">Theo dõi</dt><dd data-copy="observabilityDesc">Requests, usage và trạng thái cập nhật realtime</dd></div><div><dt data-copy="preferences">Tùy chọn</dt><dd data-copy="preferencesDesc">Tiếng Việt / English · sáng / tối</dd></div></dl>
+</section>
+<section class="limits wrap"><h2 data-copy="limitsTitle">Hiểu rõ giới hạn trước khi bắt đầu.</h2><div class="limits-body"><p data-copy="limitsCopy">CoworkerAPI không phải API chính thức của ChatGPT và không bảo đảm tốc độ tương đương một API model trực tiếp. Widget xử lý request tuần tự; SSE được trả sau khi nhận callback hoàn chỉnh.</p><p data-copy="limitsAccount">Khả năng kết nối và giới hạn sử dụng phụ thuộc tài khoản ChatGPT của bạn. Windows là nền tảng chính; cài tunnel và lưu secret bằng DPAPI hiện dành cho Windows.</p><a class="text-link" href="docs/security.html" data-copy="securityDocs">Bảo mật và giới hạn</a></div></section>
+<section class="final-cta wrap"><h2 data-copy="finalTitle">Thiết lập kết nối đầu tiên.</h2><a class="button primary" href="docs/installation.html" data-copy="install">Cài từ mã nguồn</a></section>
+</main>
+<footer class="footer wrap"><span>CoworkerAPI</span><div><a href="docs/index.html" data-copy="docs">Tài liệu</a><a href="https://github.com/dat-hoangnguyentuandat/coworkerAPI">GitHub ↗</a></div><p><span data-copy="contact">Liên hệ:</span> <a href="mailto:hoangdatlnbp@gmail.com">hoangdatlnbp@gmail.com</a></p></footer>
+</body></html>

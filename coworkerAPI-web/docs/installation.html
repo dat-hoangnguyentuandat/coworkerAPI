@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="vi" data-doc-page="install">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cài đặt — CoworkerAPI</title>
+<meta name="description" content="Chạy CoworkerAPI từ mã nguồn.">
+<link rel="icon" type="image/png" href="../assets/img/coworker-logo.png">
+<link rel="stylesheet" href="../assets/css/api.css">
+<script src="../assets/js/api-site.js" defer></script>
+<script src="../assets/js/api-docs.js" defer></script>
+</head>
+<body>
+<a class="skip-link" href="#main" data-doc-vi="Đến nội dung" data-doc-en="Skip to content">Đến nội dung</a>
+<header class="topbar wrap">
+<a class="brand" href="../index.html"><img src="../assets/img/coworker-logo.png" width="32" height="32" alt="">CoworkerAPI</a>
+<div class="controls"><a href="../index.html" data-doc-vi="Trang chủ" data-doc-en="Home">Trang chủ</a>
+<label class="sr-only" for="doc-language" data-doc-vi="Ngôn ngữ" data-doc-en="Language">Ngôn ngữ</label>
+<select id="doc-language" data-language aria-label="Language"><option value="vi">VI</option><option value="en">EN</option></select>
+<button type="button" class="theme-toggle" data-theme-toggle aria-label="Toggle color theme"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M20.8 13a9 9 0 1 1-9.8-9.8A7 7 0 0 0 20.8 13Z"/></svg></button></div>
+</header>
+<div class="docs-layout wrap">
+<aside class="docs-nav"><p class="muted" data-doc-vi="Tài liệu" data-doc-en="Documentation">Tài liệu</p><nav aria-label="Documentation"><a href="index.html" data-doc-link="overview" data-doc-vi="Tổng quan" data-doc-en="Overview">Tổng quan</a>
+<a href="installation.html" data-doc-link="install" data-doc-vi="Cài đặt" data-doc-en="Installation">Cài đặt</a>
+<a href="quickstart.html" data-doc-link="quickstart" data-doc-vi="Yêu cầu đầu tiên" data-doc-en="First request">Yêu cầu đầu tiên</a>
+<a href="multi-tunnel.html" data-doc-link="tunnels" data-doc-vi="Kết nối ChatGPT" data-doc-en="Connect ChatGPT">Kết nối ChatGPT</a>
+<a href="multi-account.html" data-doc-link="profiles" data-doc-vi="Cấu hình client" data-doc-en="Client configuration">Cấu hình client</a>
+<a href="security.html" data-doc-link="security" data-doc-vi="Bảo mật" data-doc-en="Security">Bảo mật</a>
+<a href="changelog.html" data-doc-link="changelog" data-doc-vi="Thay đổi" data-doc-en="Changelog">Thay đổi</a></nav></aside>
+<main class="docs-article" id="main" tabindex="-1">
+<section data-doc-locale="vi"><h1>Cài đặt</h1><p class="lead">Chạy CoworkerAPI từ mã nguồn.</p><h2>Yêu cầu</h2><ul><li>Node.js 22.14 trở lên và npm.</li><li>Mã nguồn CoworkerAPI trên máy của bạn.</li><li>Tài khoản ChatGPT có quyền dùng plugin/MCP Apps.</li><li><code>tunnel-client</code> nếu kết nối ChatGPT qua tunnel.</li></ul><h2>Build và mở launcher</h2><p>Mở terminal tại thư mục repository, sau đó chạy:</p><pre><code>cd coworkerAPI-dashboard
+npm ci
+npm run build
+node bin/coworkerapi.mjs</code></pre><p>Launcher khởi tạo cấu hình nếu chưa có. Chọn mở dashboard và truy cập địa chỉ được in trong terminal. Giữ terminal mở để dịch vụ tiếp tục chạy.</p><h2>Đăng nhập dashboard</h2><p>Mật khẩu local ban đầu là <code>123456</code>. Để đặt mật khẩu khởi tạo khác, cấu hình <code>COWORKER_ADMIN_PASSWORD</code> trước lần chạy đầu tiên. Mật khẩu đã lưu được giữ nguyên; biến này không thay đổi mật khẩu hiện có. Giữ trang quản trị trên máy local. Mật khẩu quản trị không phải API key của client.</p><h2>Lệnh toàn cục</h2><p>Để gọi launcher bằng <code>coworkerapi</code>, chạy lệnh sau trong thư mục <code>coworkerAPI-dashboard</code>:</p><pre><code>npm link
+coworkerapi</code></pre><p>Windows là nền tảng chính. Launcher có cơ chế mở trình duyệt cho macOS, Linux và Termux, nhưng cài tunnel và lưu secret bằng DPAPI hiện yêu cầu Windows. Không xem các nền tảng khác là luồng bridge đã được hỗ trợ đầy đủ.</p><h2>Cập nhật</h2><p>Sao lưu cấu hình và dữ liệu runtime, dừng dịch vụ, cập nhật mã nguồn rồi chạy lại <code>npm ci</code> và <code>npm run build</code>. Không chạy nhiều gateway với cùng Tunnel ID.</p></section>
+<section data-doc-locale="en" hidden><h1>Installation</h1><p class="lead">Run CoworkerAPI from source.</p><h2>Requirements</h2><ul><li>Node.js 22.14 or newer and npm.</li><li>A local copy of the CoworkerAPI source.</li><li>A ChatGPT account with plugin/MCP Apps access.</li><li><code>tunnel-client</code> when connecting ChatGPT through a tunnel.</li></ul><h2>Build and open the launcher</h2><p>From the repository directory, run:</p><pre><code>cd coworkerAPI-dashboard
+npm ci
+npm run build
+node bin/coworkerapi.mjs</code></pre><p>The launcher initializes configuration when needed. Choose the dashboard option and open the address printed in the terminal. Keep the terminal open to keep the service running.</p><h2>Sign in to the dashboard</h2><p>The initial local password is <code>123456</code>. To set a different initial password, configure <code>COWORKER_ADMIN_PASSWORD</code> before the first start. Existing passwords are preserved; this variable does not reset an existing password. Keep administration local. The admin password is separate from the API key used by clients.</p><h2>Global command</h2><p>To open the launcher with <code>coworkerapi</code>, run this inside <code>coworkerAPI-dashboard</code>:</p><pre><code>npm link
+coworkerapi</code></pre><p>Windows is the primary platform. The launcher has browser-opening support for macOS, Linux, and Termux, but tunnel installation and DPAPI-protected secret storage currently require Windows. This does not imply a fully supported bridge flow on other platforms.</p><h2>Update</h2><p>Back up configuration and runtime data, stop the service, update the source, and run <code>npm ci</code> and <code>npm run build</code> again. Do not run multiple gateways with the same Tunnel ID.</p></section>
+<nav class="doc-pager" aria-label="Documentation pages"><a href="index.html" data-doc-vi="← Tổng quan" data-doc-en="← Overview">← Tổng quan</a><a href="quickstart.html" data-doc-vi="Yêu cầu đầu tiên →" data-doc-en="First request →">Yêu cầu đầu tiên →</a></nav>
+</main></div>
+<footer class="wrap doc-footer"><span>CoworkerAPI</span><p class="muted"><span data-doc-vi="Liên hệ:" data-doc-en="Contact:">Liên hệ:</span> <a href="mailto:hoangdatlnbp@gmail.com">hoangdatlnbp@gmail.com</a></p></footer>
+</body>
+</html>

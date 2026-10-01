@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="vi" data-doc-page="quickstart">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Yêu cầu đầu tiên — CoworkerAPI</title>
+<meta name="description" content="Kiểm tra kết nối trước khi cấu hình công cụ.">
+<link rel="icon" type="image/png" href="../assets/img/coworker-logo.png">
+<link rel="stylesheet" href="../assets/css/api.css">
+<script src="../assets/js/api-site.js" defer></script>
+<script src="../assets/js/api-docs.js" defer></script>
+</head>
+<body>
+<a class="skip-link" href="#main" data-doc-vi="Đến nội dung" data-doc-en="Skip to content">Đến nội dung</a>
+<header class="topbar wrap">
+<a class="brand" href="../index.html"><img src="../assets/img/coworker-logo.png" width="32" height="32" alt="">CoworkerAPI</a>
+<div class="controls"><a href="../index.html" data-doc-vi="Trang chủ" data-doc-en="Home">Trang chủ</a>
+<label class="sr-only" for="doc-language" data-doc-vi="Ngôn ngữ" data-doc-en="Language">Ngôn ngữ</label>
+<select id="doc-language" data-language aria-label="Language"><option value="vi">VI</option><option value="en">EN</option></select>
+<button type="button" class="theme-toggle" data-theme-toggle aria-label="Toggle color theme"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M20.8 13a9 9 0 1 1-9.8-9.8A7 7 0 0 0 20.8 13Z"/></svg></button></div>
+</header>
+<div class="docs-layout wrap">
+<aside class="docs-nav"><p class="muted" data-doc-vi="Tài liệu" data-doc-en="Documentation">Tài liệu</p><nav aria-label="Documentation"><a href="index.html" data-doc-link="overview" data-doc-vi="Tổng quan" data-doc-en="Overview">Tổng quan</a>
+<a href="installation.html" data-doc-link="install" data-doc-vi="Cài đặt" data-doc-en="Installation">Cài đặt</a>
+<a href="quickstart.html" data-doc-link="quickstart" data-doc-vi="Yêu cầu đầu tiên" data-doc-en="First request">Yêu cầu đầu tiên</a>
+<a href="multi-tunnel.html" data-doc-link="tunnels" data-doc-vi="Kết nối ChatGPT" data-doc-en="Connect ChatGPT">Kết nối ChatGPT</a>
+<a href="multi-account.html" data-doc-link="profiles" data-doc-vi="Cấu hình client" data-doc-en="Client configuration">Cấu hình client</a>
+<a href="security.html" data-doc-link="security" data-doc-vi="Bảo mật" data-doc-en="Security">Bảo mật</a>
+<a href="changelog.html" data-doc-link="changelog" data-doc-vi="Thay đổi" data-doc-en="Changelog">Thay đổi</a></nav></aside>
+<main class="docs-article" id="main" tabindex="-1">
+<section data-doc-locale="vi"><h1>Yêu cầu đầu tiên</h1><p class="lead">Kiểm tra kết nối trước khi cấu hình công cụ.</p><h2>Chuẩn bị</h2><p>Hoàn thành <a href="multi-tunnel.html">kết nối ChatGPT</a> và chờ bridge báo Ready. Mở mục API keys trong dashboard, tạo key riêng cho client và lưu ở vị trí an toàn.</p><h2>Kiểm tra danh sách model</h2><p>Ví dụ dưới dùng cổng mặc định <code>3211</code>. Thay URL bằng endpoint dashboard hiển thị và thay <code>&lt;API_KEY&gt;</code> bằng key của CoworkerAPI. Ví dụ curl dùng cú pháp Bash. Trong PowerShell, dùng ví dụ riêng ở dưới.</p><pre><code>curl "http://127.0.0.1:3211/v1/models" \
+  -H "Authorization: Bearer &lt;API_KEY&gt;"</code></pre><p>Response phải có model <code>chatgpt-web</code>. Route này xác nhận gateway và API key; chưa xác nhận ChatGPT tạo được câu trả lời.</p><h2>Gửi một câu hỏi</h2><pre><code>curl "http://127.0.0.1:3211/v1/chat/completions" \
+  -H "Authorization: Bearer &lt;API_KEY&gt;" \
+  -H "Content-Type: application/json" \
+  -d '{"model":"chatgpt-web","messages":[{"role":"user","content":"Reply with OK."}]}'</code></pre><p>Trong dashboard, theo dõi trạng thái request và thời gian xử lý. Giữ widget mở cho tới khi request hoàn tất. Sau đó <a href="multi-account.html">cấu hình client</a> với cùng endpoint và key.</p><h2>PowerShell</h2><pre><code>$headers = @{ Authorization = "Bearer &lt;API_KEY&gt;" }
+Invoke-RestMethod -Uri "http://127.0.0.1:3211/v1/models" -Headers $headers
+$body = @{ model = "chatgpt-web"; messages = @(@{ role = "user"; content = "Reply with OK." }) } | ConvertTo-Json -Depth 5
+Invoke-RestMethod -Method Post -Uri "http://127.0.0.1:3211/v1/chat/completions" -Headers $headers -ContentType "application/json" -Body $body</code></pre><h2>Xử lý lỗi</h2><dl><dt><code>401</code> — Xác thực</dt><dd>Kiểm tra API key, header và key có còn hiệu lực hay không.</dd><dt><code>404</code> — Route hoặc model</dt><dd>Kiểm tra base URL, route và model alias trong dashboard.</dd><dt><code>429</code> — Giới hạn yêu cầu</dt><dd>Kiểm tra giới hạn số yêu cầu mỗi phút và số yêu cầu đồng thời của API key trước khi gửi lại. Gateway không đo quota tài khoản ChatGPT.</dd><dt><code>504</code> — Hết thời gian chờ</dt><dd>Kiểm tra widget, hội thoại kích hoạt, tunnel và nhật ký. Không gửi lặp nhiều lần khi request cũ còn đang xử lý.</dd></dl></section>
+<section data-doc-locale="en" hidden><h1>First request</h1><p class="lead">Verify the connection before configuring your tool.</p><h2>Before you begin</h2><p>Complete the <a href="multi-tunnel.html">ChatGPT connection</a> and wait for the bridge to show Ready. Open API keys in the dashboard, create a key for your client, and store it securely.</p><h2>List models</h2><p>These examples use the default port, <code>3211</code>. Replace the URL with the endpoint shown in your dashboard and replace <code>&lt;API_KEY&gt;</code> with a CoworkerAPI key. The curl examples use Bash syntax. For PowerShell, use the separate example below.</p><pre><code>curl "http://127.0.0.1:3211/v1/models" \
+  -H "Authorization: Bearer &lt;API_KEY&gt;"</code></pre><p>The response should include <code>chatgpt-web</code>. This verifies the gateway and key, but does not yet verify ChatGPT inference.</p><h2>Send a question</h2><pre><code>curl "http://127.0.0.1:3211/v1/chat/completions" \
+  -H "Authorization: Bearer &lt;API_KEY&gt;" \
+  -H "Content-Type: application/json" \
+  -d '{"model":"chatgpt-web","messages":[{"role":"user","content":"Reply with OK."}]}'</code></pre><p>Watch the request status and duration in the dashboard. Keep the widget open until the request completes. Then <a href="multi-account.html">configure your client</a> with the same endpoint and key.</p><h2>PowerShell</h2><pre><code>$headers = @{ Authorization = "Bearer &lt;API_KEY&gt;" }
+Invoke-RestMethod -Uri "http://127.0.0.1:3211/v1/models" -Headers $headers
+$body = @{ model = "chatgpt-web"; messages = @(@{ role = "user"; content = "Reply with OK." }) } | ConvertTo-Json -Depth 5
+Invoke-RestMethod -Method Post -Uri "http://127.0.0.1:3211/v1/chat/completions" -Headers $headers -ContentType "application/json" -Body $body</code></pre><h2>Troubleshooting</h2><dl><dt><code>401</code> — Authentication</dt><dd>Check the key, authentication header, and whether the key is still active.</dd><dt><code>404</code> — Route or model</dt><dd>Check your base URL, route, and model alias in the dashboard.</dd><dt><code>429</code> — Request limit</dt><dd>Check the API key’s requests-per-minute and concurrent-request limits before retrying. The gateway does not measure ChatGPT account quotas.</dd><dt><code>504</code> — Timeout</dt><dd>Check the widget, activation conversation, tunnel, and logs. Avoid repeated retries while an earlier request is still processing.</dd></dl></section>
+<nav class="doc-pager" aria-label="Documentation pages"><a href="installation.html" data-doc-vi="← Cài đặt" data-doc-en="← Installation">← Cài đặt</a><a href="multi-tunnel.html" data-doc-vi="Kết nối ChatGPT →" data-doc-en="Connect ChatGPT →">Kết nối ChatGPT →</a></nav>
+</main></div>
+<footer class="wrap doc-footer"><span>CoworkerAPI</span><p class="muted"><span data-doc-vi="Liên hệ:" data-doc-en="Contact:">Liên hệ:</span> <a href="mailto:hoangdatlnbp@gmail.com">hoangdatlnbp@gmail.com</a></p></footer>
+</body>
+</html>

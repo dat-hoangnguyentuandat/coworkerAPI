@@ -1,0 +1,62 @@
+/* ── 5) LIVING HERO MOCK: typed chat + approval cycle ──── */
+
+/* chat bubble types itself, then approval slides in, loops */
+
+.mm-chat { position: relative; }
+.mm-chat .chip { flex-shrink: 0; }
+
+.typing {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  height: 18px;
+}
+.typing i {
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: var(--faint);
+  animation: typing-bounce 1.2s ease-in-out infinite;
+}
+.typing i:nth-child(2) { animation-delay: 0.15s; }
+.typing i:nth-child(3) { animation-delay: 0.3s; }
+@keyframes typing-bounce {
+  0%, 60%, 100% { transform: translateY(0); opacity: 0.5; }
+  30% { transform: translateY(-4px); opacity: 1; }
+}
+
+/* approval bar: hidden until the mock "approves" */
+.approval {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.5s cubic-bezier(0.2, 0.65, 0.2, 1), transform 0.5s cubic-bezier(0.2, 0.65, 0.2, 1);
+}
+.approval.shown { opacity: 1; transform: translateY(0); }
+.approval.approved {
+  opacity: 1;
+  transform: translateY(0);
+  border-color: color-mix(in srgb, var(--ok) 55%, var(--line));
+  background: color-mix(in srgb, var(--ok) 10%, var(--surface));
+}
+.approval .a-btn.ok.approved-flash {
+  animation: btn-approved 0.9s cubic-bezier(0.2, 0.65, 0.2, 1);
+}
+@keyframes btn-approved {
+  0% { transform: scale(1); }
+  40% { transform: scale(1.08); box-shadow: 0 0 0 6px color-mix(in srgb, var(--ok) 22%, transparent); }
+  100% { transform: scale(1); }
+}
+
+/* mm "3 test pass" chip ticks up when tests "run" */
+.mm-chip.tick {
+  animation: chip-tick 0.5s cubic-bezier(0.2, 0.65, 0.2, 1);
+}
+@keyframes chip-tick {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.12); }
+  100% { transform: scale(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .typing i { animation: none; }
+  .approval { opacity: 1; transform: none; transition: none; }
+}

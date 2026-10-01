@@ -1,0 +1,217 @@
+/* ============================================================
+   Coworker Web — Landing animations v3
+   Parallax, marquee, counters, magnetic, tilt, word reveal
+   ============================================================ */
+
+/* ── Header hide on scroll down ─────────────────────────── */
+
+.site-header { transition: transform 0.35s cubic-bezier(0.2, 0.65, 0.2, 1); will-change: transform; }
+.site-header.hid { transform: translateY(-100%); }
+
+/* ── Hero parallax ──────────────────────────────────────── */
+
+.hero-mock { will-change: transform; }
+.hero::before { will-change: transform; }
+@media (prefers-reduced-motion: reduce) {
+  .hero-mock, .hero::before { transform: none !important; }
+}
+
+/* ── Marquee trust strip ────────────────────────────────── */
+
+.marquee { overflow: hidden; position: relative; }
+.marquee::before,
+.marquee::after {
+  content: "";
+  position: absolute;
+  top: 0; bottom: 0;
+  width: 90px;
+  z-index: 2;
+  pointer-events: none;
+}
+.marquee::before { left: 0; background: linear-gradient(90deg, var(--bg-alt), transparent); }
+.marquee::after { right: 0; background: linear-gradient(-90deg, var(--bg-alt), transparent); }
+.marquee-track {
+  display: flex;
+  gap: 56px;
+  width: max-content;
+  padding: 18px 0;
+  animation: marquee 30s linear infinite;
+}
+.marquee:hover .marquee-track { animation-play-state: paused; }
+@keyframes marquee { to { transform: translateX(-50%); } }
+@media (prefers-reduced-motion: reduce) { .marquee-track { animation: none; } }
+
+/* ── Stats row with counters ────────────────────────────── */
+
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+  border-radius: 15px;
+  overflow: hidden;
+}
+.stat-cell {
+  background: var(--bg);
+  padding: 26px 24px 22px;
+  position: relative;
+}
+.stat-cell .stat-num {
+  font-size: clamp(34px, 4vw, 44px);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: var(--ink-heading);
+  font-variant-numeric: tabular-nums;
+  display: flex;
+  align-items: baseline;
+  gap: 2px;
+}
+.stat-cell .stat-num em {
+  font-size: 0.55em;
+  font-style: normal;
+  font-weight: 650;
+  color: var(--accent);
+  margin-left: 2px;
+}
+.stat-cell .stat-label {
+  margin-top: 6px;
+  font-size: 13.5px;
+  color: var(--muted);
+  font-weight: 550;
+}
+.stat-cell::after {
+  content: "";
+  position: absolute;
+  left: 24px;
+  bottom: 18px;
+  width: 26px;
+  height: 2px;
+  background: var(--accent);
+  border-radius: 2px;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.6s cubic-bezier(0.2, 0.65, 0.2, 1) 0.25s;
+}
+.stat-cell.in .stat-num { animation: stat-pop 0.5s cubic-bezier(0.2, 0.65, 0.2, 1); }
+.stat-cell.in::after { transform: scaleX(1); }
+@keyframes stat-pop { from { transform: translateY(8px); opacity: 0; } }
+
+@media (max-width: 700px) {
+  .stats-row { grid-template-columns: minmax(0, 1fr); }
+  .stat-cell { padding: 19px 22px 23px; }
+  .stat-cell .stat-num { font-size: 34px; }
+  .stat-cell .stat-label { margin-top: 3px; line-height: 1.45; }
+  .stat-cell::after { left: 22px; bottom: 12px; }
+}
+
+/* ── Magnetic buttons ───────────────────────────────────── */
+
+.btn-magnetic { transition: transform 0.25s cubic-bezier(0.2, 0.65, 0.2, 1), background 0.18s, box-shadow 0.18s; will-change: transform; }
+
+/* ── 3D tilt on media cards ─────────────────────────────── */
+
+.fs-media { transform-style: preserve-3d; will-change: transform; }
+.fs-media.tilting { transition: transform 0.18s ease-out; }
+.fs-media.leaving { transition: transform 0.45s cubic-bezier(0.2, 0.65, 0.2, 1); }
+
+/* ── CTA shimmer ────────────────────────────────────────── */
+
+.final-cta h2 em {
+  background: linear-gradient(100deg, var(--accent) 20%, var(--green-300) 40%, var(--accent) 60%);
+  background-size: 220% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shimmer 5.5s ease-in-out infinite;
+}
+@keyframes shimmer { 0%, 100% { background-position: 0% 0; } 50% { background-position: 100% 0; } }
+@media (prefers-reduced-motion: reduce) { .final-cta h2 em { animation: none; } }
+
+/* ── Section heading underline draw ─────────────────────── */
+
+.section-head h2 { position: relative; display: inline-block; }
+.section-head.center h2 { display: block; width: fit-content; margin-left: auto; margin-right: auto; }
+.section-head h2::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -10px;
+  width: 44px;
+  height: 3px;
+  border-radius: 3px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.55s cubic-bezier(0.2, 0.65, 0.2, 1) 0.2s;
+}
+.section-head.rv.in h2::after { transform: scaleX(1); }
+
+/* ── Long mono strings must wrap on mobile ──────────────── */
+
+.fs-copy li small, .vf-step span { white-space: normal; overflow-wrap: anywhere; }
+
+/* ── Mobile: mock rows must not overflow ────────────────── */
+
+@media (max-width: 640px) {
+.va-row { max-width: 100%; flex-wrap: wrap; }
+.va-row .va-info { min-width: 0; }
+.va-row .va-info { flex: 1 1 calc(100% - 42px); }
+.va-row .va-info b, .va-row .va-info span { overflow-wrap: anywhere; }
+.va-tag { flex-shrink: 0; margin-left: 42px; }
+}
+
+@media (max-width: 360px) {
+  .va-row .va-profile { margin-left: 42px; }
+}
+
+/* Section-level motion: the page should feel alive below the hero too. */
+.motion-ready .feature-split, .motion-ready .security-band .hz-panel, .motion-ready .steps-rail .step, .motion-ready .final-cta .btn { opacity: 0; transform: translateY(18px); transition: opacity .65s cubic-bezier(.2,.65,.2,1), transform .65s cubic-bezier(.2,.65,.2,1); }
+.feature-split.in, .security-band .hz-panel.in, .steps-rail .step.in, .final-cta .btn.in { opacity: 1; transform: none; }
+.feature-split:nth-child(2), .security-band .hz-panel:nth-child(2), .steps-rail .step:nth-child(2) { transition-delay: 90ms; }
+.feature-split:nth-child(3), .security-band .hz-panel:nth-child(3), .steps-rail .step:nth-child(3) { transition-delay: 180ms; }
+.feature-split:nth-child(4), .security-band .hz-panel:nth-child(4), .steps-rail .step:nth-child(4) { transition-delay: 270ms; }
+@media (prefers-reduced-motion: reduce) {
+  .feature-split, .security-band .hz-panel, .steps-rail .step, .final-cta .btn { opacity: 1; transform: none; transition: none; }
+}
+
+/* Each feature has a distinct, on-screen entrance rather than a faint shared fade. */
+.motion-ready .feature-split .fs-copy.rv-left { transform: translateX(-72px); }
+.motion-ready .feature-split .fs-copy.rv-right { transform: translateX(72px); }
+.motion-ready .feature-split .fs-media.rv-left { transform: translateX(-90px) scale(.93); }
+.motion-ready .feature-split .fs-media.rv-right { transform: translateX(90px) scale(.93); }
+.motion-ready .feature-split .fs-copy.rv, .motion-ready .feature-split .fs-media.rv { transition: opacity .9s cubic-bezier(.16,1,.3,1), transform .9s cubic-bezier(.16,1,.3,1); }
+.motion-ready .feature-split .fs-media.rv { transition-delay: .17s; }
+.motion-ready .feature-split .rv.in { opacity: 1; transform: none; }
+.feature-code .fs-media.in .vf-step { animation: flow-enter .85s cubic-bezier(.16,1,.3,1) backwards; }
+.feature-code .vf-step:nth-child(2) { animation-delay: .2s; }
+.feature-code .vf-step:nth-child(3) { animation-delay: .4s; }
+.feature-code .vf-step:nth-child(4) { animation-delay: .6s; }
+@keyframes flow-enter { from { opacity: 0; transform: translateX(-44px) scale(.94); } to { opacity: 1; transform: none; } }
+
+.feature-profiles .fs-media.in .va-row { animation: account-enter .9s cubic-bezier(.16,1,.3,1) backwards; }
+.feature-profiles .va-row:nth-child(2) { animation-delay: .2s; }
+.feature-profiles .va-row:nth-child(3) { animation-delay: .4s; }
+@keyframes account-enter { from { opacity: 0; transform: translateY(46px) scale(.9); } to { opacity: 1; transform: none; } }
+
+.feature-tunnels .fs-media.in .vt-row { animation: tunnel-enter .95s cubic-bezier(.16,1,.3,1) backwards; }
+.feature-tunnels .vt-row:nth-child(2) { animation-delay: .23s; }
+.feature-tunnels .vt-row:nth-child(3) { animation-delay: .46s; }
+@keyframes tunnel-enter { from { opacity: 0; clip-path: inset(0 100% 0 0); transform: translateX(28px); } to { opacity: 1; clip-path: inset(0); transform: none; } }
+
+.security-band .hz-panel.in { animation: security-enter 1s cubic-bezier(.16,1,.3,1) backwards; }
+.security-band .hz-panel:nth-child(2).in { animation-delay: .14s; }
+.security-band .hz-panel:nth-child(3).in { animation-delay: .28s; }
+.security-band .hz-panel:nth-child(4).in { animation-delay: .42s; }
+.security-band .hz-panel.in .hz-kv { animation: security-detail .8s cubic-bezier(.16,1,.3,1) .55s backwards; }
+@keyframes security-enter { from { opacity: 0; transform: translateY(64px) scale(.9); } to { opacity: 1; transform: none; } }
+@keyframes security-detail { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: none; } }
+.steps-rail .step.in b, .steps-rail .step.in p { animation: step-copy-enter .55s ease-out backwards; }
+.steps-rail .step.in p { animation-delay: .12s; }
+@keyframes step-copy-enter { from { opacity: 0; transform: translateX(14px); } to { opacity: 1; transform: none; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .feature-code .fs-media.in .vf-step, .feature-profiles .fs-media.in .va-row,
+  .feature-tunnels .fs-media.in .vt-row, .security-band .hz-panel.in, .security-band .hz-panel.in .hz-kv,
+  .steps-rail .step.in b, .steps-rail .step.in p { animation: none; }
+}

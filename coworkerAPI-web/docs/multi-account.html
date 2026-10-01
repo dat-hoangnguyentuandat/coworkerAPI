@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="vi" data-doc-page="profiles">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cấu hình client — CoworkerAPI</title>
+<meta name="description" content="Chọn giao thức mà công cụ của bạn hỗ trợ.">
+<link rel="icon" type="image/png" href="../assets/img/coworker-logo.png">
+<link rel="stylesheet" href="../assets/css/api.css">
+<script src="../assets/js/api-site.js" defer></script>
+<script src="../assets/js/api-docs.js" defer></script>
+</head>
+<body>
+<a class="skip-link" href="#main" data-doc-vi="Đến nội dung" data-doc-en="Skip to content">Đến nội dung</a>
+<header class="topbar wrap">
+<a class="brand" href="../index.html"><img src="../assets/img/coworker-logo.png" width="32" height="32" alt="">CoworkerAPI</a>
+<div class="controls"><a href="../index.html" data-doc-vi="Trang chủ" data-doc-en="Home">Trang chủ</a>
+<label class="sr-only" for="doc-language" data-doc-vi="Ngôn ngữ" data-doc-en="Language">Ngôn ngữ</label>
+<select id="doc-language" data-language aria-label="Language"><option value="vi">VI</option><option value="en">EN</option></select>
+<button type="button" class="theme-toggle" data-theme-toggle aria-label="Toggle color theme"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M20.8 13a9 9 0 1 1-9.8-9.8A7 7 0 0 0 20.8 13Z"/></svg></button></div>
+</header>
+<div class="docs-layout wrap">
+<aside class="docs-nav"><p class="muted" data-doc-vi="Tài liệu" data-doc-en="Documentation">Tài liệu</p><nav aria-label="Documentation"><a href="index.html" data-doc-link="overview" data-doc-vi="Tổng quan" data-doc-en="Overview">Tổng quan</a>
+<a href="installation.html" data-doc-link="install" data-doc-vi="Cài đặt" data-doc-en="Installation">Cài đặt</a>
+<a href="quickstart.html" data-doc-link="quickstart" data-doc-vi="Yêu cầu đầu tiên" data-doc-en="First request">Yêu cầu đầu tiên</a>
+<a href="multi-tunnel.html" data-doc-link="tunnels" data-doc-vi="Kết nối ChatGPT" data-doc-en="Connect ChatGPT">Kết nối ChatGPT</a>
+<a href="multi-account.html" data-doc-link="profiles" data-doc-vi="Cấu hình client" data-doc-en="Client configuration">Cấu hình client</a>
+<a href="security.html" data-doc-link="security" data-doc-vi="Bảo mật" data-doc-en="Security">Bảo mật</a>
+<a href="changelog.html" data-doc-link="changelog" data-doc-vi="Thay đổi" data-doc-en="Changelog">Thay đổi</a></nav></aside>
+<main class="docs-article" id="main" tabindex="-1">
+<section data-doc-locale="vi"><h1>Cấu hình client</h1><p class="lead">Chọn giao thức mà công cụ của bạn hỗ trợ.</p><h2>OpenAI-compatible</h2><p>Trong client có custom provider, nhập base URL <code>http://127.0.0.1:3211/v1</code>, API key CoworkerAPI và model <code>chatgpt-web</code>. Client dùng Bearer authentication. Tùy công cụ, chọn Chat Completions hoặc Responses API.</p><h2>Anthropic-compatible</h2><p>Dùng base URL <code>http://127.0.0.1:3211</code>, không thêm <code>/v1</code>. Route Messages là <code>POST /v1/messages</code>. Client có thể xác thực bằng <code>x-api-key</code>.</p><h2>Claude Code</h2><p>Trong file cấu hình người dùng <code>~/.claude/settings.json</code> (Windows: <code>%USERPROFILE%\.claude\settings.json</code>), gộp các biến sau vào mục <code>env</code> hiện có, không ghi đè cấu hình khác:</p><pre><code>{
+  "env": {
+    "ANTHROPIC_BASE_URL": "http://127.0.0.1:3211",
+    "ANTHROPIC_AUTH_TOKEN": "&lt;API_KEY&gt;",
+    "ANTHROPIC_MODEL": "chatgpt-web"
+  }
+}</code></pre><p>Khởi động lại Claude Code sau khi thay đổi. Đây là cấu hình custom endpoint, không phải đăng nhập bằng tài khoản Claude hoặc chuyển đổi gói thuê bao.</p><h2>Cursor, VS Code, OpenCode và công cụ khác</h2><p>Chọn provider tùy chỉnh nếu công cụ hỗ trợ, rồi dùng endpoint, key và model tương ứng. Tên trường và các tham số bắt buộc có thể khác giữa các phiên bản. Kiểm tra một yêu cầu ngắn trước khi cho client chạy task nhiều bước.</p><h2>Model alias và tài khoản</h2><p>Model alias là tên định tuyến của gateway, không phải cam kết dùng model native cùng tên. Một tên model Claude không biến upstream thành Claude. Trang này không cung cấp profile đa tài khoản hoặc đăng nhập native Codex/Claude.</p></section>
+<section data-doc-locale="en" hidden><h1>Client configuration</h1><p class="lead">Choose the protocol your client supports.</p><h2>OpenAI-compatible</h2><p>In a client supporting custom providers, set the base URL to <code>http://127.0.0.1:3211/v1</code>, use a CoworkerAPI key, and select <code>chatgpt-web</code>. Authentication uses a Bearer token. Choose Chat Completions or Responses according to your client.</p><h2>Anthropic-compatible</h2><p>Use <code>http://127.0.0.1:3211</code> as the base URL, without <code>/v1</code>. The Messages route is <code>POST /v1/messages</code>. Clients may authenticate with <code>x-api-key</code>.</p><h2>Claude Code</h2><p>In your user settings file, <code>~/.claude/settings.json</code> (Windows: <code>%USERPROFILE%\.claude\settings.json</code>), merge these variables into the existing <code>env</code> object without replacing other settings:</p><pre><code>{
+  "env": {
+    "ANTHROPIC_BASE_URL": "http://127.0.0.1:3211",
+    "ANTHROPIC_AUTH_TOKEN": "&lt;API_KEY&gt;",
+    "ANTHROPIC_MODEL": "chatgpt-web"
+  }
+}</code></pre><p>Restart Claude Code after changing settings. This uses a custom endpoint; it is not a native Claude account login or a subscription conversion.</p><h2>Cursor, VS Code, OpenCode, and other tools</h2><p>Select a custom provider where supported, then enter the corresponding endpoint, key, and model. Field names and required parameters can vary between client versions. Test a short request before running a multi-step task.</p><h2>Model aliases and accounts</h2><p>A model alias is a gateway routing name, not a promise to use a native model with that name. A Claude model name does not make the upstream Claude. This page does not provide multi-account profiles or native Codex/Claude sign-in.</p></section>
+<nav class="doc-pager" aria-label="Documentation pages"><a href="multi-tunnel.html" data-doc-vi="← Kết nối ChatGPT" data-doc-en="← Connect ChatGPT">← Kết nối ChatGPT</a><a href="security.html" data-doc-vi="Bảo mật →" data-doc-en="Security →">Bảo mật →</a></nav>
+</main></div>
+<footer class="wrap doc-footer"><span>CoworkerAPI</span><p class="muted"><span data-doc-vi="Liên hệ:" data-doc-en="Contact:">Liên hệ:</span> <a href="mailto:hoangdatlnbp@gmail.com">hoangdatlnbp@gmail.com</a></p></footer>
+</body>
+</html>

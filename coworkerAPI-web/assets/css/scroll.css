@@ -1,0 +1,115 @@
+/* ============================================================
+   Coworker Web — section layout and scroll highlights
+   ============================================================ */
+
+/* ── Security overview ──────────────────────────────────── */
+
+.hz-band { position: relative; }
+
+.security-band.hz-band { overflow: visible; padding: 0; background: var(--bg-alt); color: var(--ink); }
+.security-band.hz-band::before { display: none; }
+.hz-sticky {
+  position: static;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  overflow: visible;
+  padding: 92px max(5vw, 24px);
+  box-sizing: border-box;
+  background: var(--bg-alt);
+}
+
+.hz-band .hz-track {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 18px;
+  width: min(1240px, 100%);
+  margin: 0 auto;
+  padding: 0;
+}
+
+.hz-panel {
+  width: auto;
+  min-height: 390px;
+  padding: 26px 24px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: var(--surface);
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.hz-panel .hz-num {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--accent);
+  letter-spacing: 0.14em;
+  font-weight: 600;
+  text-wrap: balance;
+}
+.hz-panel h3 {
+  font-size: clamp(22px, 1.8vw, 26px);
+  line-height: 1.18;
+  letter-spacing: -0.015em;
+  margin: 0;
+  color: var(--ink-heading);
+}
+.hz-panel h3 em { color: var(--accent); }
+.hz-panel p {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.65;
+  color: var(--muted);
+  text-wrap: pretty;
+}
+.hz-panel .hz-kv {
+  margin-top: auto;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 16px 18px;
+  background: var(--surface-2);
+  font-family: var(--font-mono);
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--ink);
+}
+.hz-panel .hz-kv mark { color: var(--accent); background: none; }
+
+/* ── Scrub highlight ───────────────────────────────────── */
+
+.scrub-p { color: var(--faint); }
+.scrub-p .sw { transition: color 0.45s ease, opacity 0.45s ease; opacity: 0.45; }
+.scrub-p .sw.lit { opacity: 1; }
+[data-scrub] { color: var(--faint); }
+[data-scrub] .sw { transition: color 0.45s ease, opacity 0.45s ease; opacity: 0.42; }
+[data-scrub] .sw.lit { opacity: 1; color: var(--ink); }
+
+/* ── Feature media ─────────────────────────────────────── */
+
+.fs-media { position: relative; }
+.fs-media .fs-glow {
+  position: absolute;
+  inset: -30px;
+  background: radial-gradient(closest-side, color-mix(in srgb, var(--accent) 14%, transparent), transparent 70%);
+  opacity: 0;
+  transition: opacity 0.5s;
+  pointer-events: none;
+}
+.fs-media.in .fs-glow { opacity: 1; }
+
+@media (prefers-reduced-motion: reduce) {
+  .hz-panel { animation: none; }
+}
+
+/* ── Responsive security cards ──────────────────────────── */
+
+@media (max-width: 900px) {
+  .hz-band .hz-sticky { padding: 64px 0; }
+  .hz-band .hz-track { grid-template-columns: 1fr; padding: 0 20px; }
+}
+
+@media (max-width: 1050px) and (min-width: 901px) {
+  .hz-band .hz-track { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .hz-panel { min-height: 330px; }
+}

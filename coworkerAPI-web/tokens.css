@@ -1,0 +1,26 @@
+/* Hallmark · theme: Quiet · light / system-native / neutral */
+@import url('https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap');
+:root {
+ --color-paper: oklch(98% 0.003 100); --color-surface: oklch(95% 0.003 100);
+ --color-ink: oklch(22% 0.003 100); --color-muted: oklch(46% 0.003 100);
+ --color-rule: oklch(83% 0.003 100); --color-accent: var(--color-ink);
+ --color-accent-ink: var(--color-paper); --color-focus: oklch(54% 0.11 180);
+ --color-success: oklch(39% 0.09 165); --color-error: oklch(43% 0.15 25);
+ --font-display: "Geist", "Segoe UI", sans-serif; --font-body: var(--font-display);
+ --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+ --space-xs: .5rem; --space-sm: .75rem; --space-md: 1rem; --space-lg: 1.5rem;
+ --space-xl: 2.5rem; --space-2xl: 4rem; --space-3xl: 6rem; --space-4xl: 9rem;
+ --text-sm: .875rem; --text-base: 1rem; --text-md: 1.25rem;
+ --text-xl: clamp(1.75rem,3vw,2.5rem); --text-display: clamp(2.5rem,7.3vw,6.8rem);
+ --ease-out: cubic-bezier(.16,1,.3,1); --ease-in: cubic-bezier(.7,0,.84,0);
+ --ease-in-out: cubic-bezier(.65,0,.35,1); --dur-micro: 120ms; --dur-short: 220ms;
+ --dur-long: 420ms; --dur-reveal: 720ms; --dur-theme: 520ms;
+ --ease-theme: cubic-bezier(.2,.8,.2,1);
+ --radius-sm: 4px; --rule-width: 1px; --z-sticky: 20;
+}
+:root[data-theme="dark"] {
+ color-scheme: dark; --color-paper: oklch(18% 0.003 100); --color-surface: oklch(23% 0.003 100);
+ --color-ink: oklch(94% 0.003 100); --color-muted: oklch(73% 0.003 100);
+ --color-rule: oklch(39% 0.003 100); --color-focus: oklch(60% 0.1 180);
+ --color-success: oklch(76% 0.1 165); --color-error: oklch(77% 0.1 25);
+}

@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en" data-doc-page="overview" data-doc-default-language="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Overview — CoworkerAPI</title>
+<meta name="description" content="Đưa ChatGPT vào công cụ bạn đang sử dụng.">
+<link rel="icon" type="image/png" href="../assets/img/coworker-logo.png">
+<link rel="stylesheet" href="../assets/css/api.css">
+<script src="../assets/js/api-site.js" defer></script>
+<script src="../assets/js/api-docs.js" defer></script>
+</head>
+<body>
+<a class="skip-link" href="#main" data-doc-vi="Đến nội dung" data-doc-en="Skip to content">Đến nội dung</a>
+<header class="topbar wrap">
+<a class="brand" href="../index.html"><img src="../assets/img/coworker-logo.png" width="32" height="32" alt="">CoworkerAPI</a>
+<div class="controls"><a href="../index.html" data-doc-vi="Trang chủ" data-doc-en="Home">Trang chủ</a>
+<label class="sr-only" for="doc-language" data-doc-vi="Ngôn ngữ" data-doc-en="Language">Ngôn ngữ</label>
+<select id="doc-language" data-language aria-label="Language"><option value="vi">VI</option><option value="en">EN</option></select>
+<button type="button" class="theme-toggle" data-theme-toggle aria-label="Toggle color theme"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M20.8 13a9 9 0 1 1-9.8-9.8A7 7 0 0 0 20.8 13Z"/></svg></button></div>
+</header>
+<div class="docs-layout wrap">
+<aside class="docs-nav"><p class="muted" data-doc-vi="Tài liệu" data-doc-en="Documentation">Tài liệu</p><nav aria-label="Documentation"><a href="index.html" data-doc-link="overview" data-doc-vi="Tổng quan" data-doc-en="Overview">Tổng quan</a>
+<a href="installation.html" data-doc-link="install" data-doc-vi="Cài đặt" data-doc-en="Installation">Cài đặt</a>
+<a href="quickstart.html" data-doc-link="quickstart" data-doc-vi="Yêu cầu đầu tiên" data-doc-en="First request">Yêu cầu đầu tiên</a>
+<a href="multi-tunnel.html" data-doc-link="tunnels" data-doc-vi="Kết nối ChatGPT" data-doc-en="Connect ChatGPT">Kết nối ChatGPT</a>
+<a href="multi-account.html" data-doc-link="profiles" data-doc-vi="Cấu hình client" data-doc-en="Client configuration">Cấu hình client</a>
+<a href="security.html" data-doc-link="security" data-doc-vi="Bảo mật" data-doc-en="Security">Bảo mật</a>
+<a href="changelog.html" data-doc-link="changelog" data-doc-vi="Thay đổi" data-doc-en="Changelog">Thay đổi</a></nav></aside>
+<main class="docs-article" id="main" tabindex="-1">
+<section data-doc-locale="vi" hidden><h1>Tổng quan</h1><p class="lead">Đưa ChatGPT vào công cụ bạn đang sử dụng.</p><p>CoworkerAPI là gateway chạy trên máy của bạn, cung cấp endpoint tương thích OpenAI và Anthropic. Yêu cầu từ công cụ được chuyển đến widget MCP trong ChatGPT; kết quả được chuyển về định dạng mà công cụ có thể đọc.</p><h2>Luồng xử lý</h2><pre><code>Client → CoworkerAPI → ChatGPT MCP widget
+       ← API response ← ChatGPT</code></pre><p>Client vẫn quản lý workspace và thực thi công cụ local. CoworkerAPI chuyển tiếp yêu cầu và kết quả; không thay thế cơ chế cấp quyền của client.</p><h2>Bắt đầu</h2><ol><li><a href="installation.html">Cài đặt từ mã nguồn</a> và mở dashboard.</li><li><a href="multi-tunnel.html">Kết nối ChatGPT</a> bằng tunnel và plugin MCP.</li><li><a href="quickstart.html">Gửi yêu cầu đầu tiên</a> với API key của CoworkerAPI.</li></ol><h2>Phạm vi hỗ trợ</h2><p>Các route hiện có: <code>POST /v1/responses</code>, <code>POST /v1/chat/completions</code>, <code>POST /v1/messages</code> và <code>GET /v1/models</code>. Mặc định dùng model alias <code>chatgpt-web</code>.</p><h2>Giới hạn cần biết</h2><p>Bridge hiện là tính năng thử nghiệm. Giữ hội thoại kích hoạt và widget mở trong suốt phiên sử dụng. Widget xử lý yêu cầu theo lượt; SSE cho client phát sau khi nhận kết quả hoàn chỉnh, không phải token streaming trực tiếp từ ChatGPT.</p><p>CoworkerAPI không phải API ChatGPT chính thức, không bảo đảm hỗ trợ toàn bộ tham số của OpenAI hoặc Anthropic và không loại bỏ giới hạn tài khoản. Quyền truy cập plugin phụ thuộc tài khoản và các tính năng ChatGPT hiện có.</p></section>
+<section data-doc-locale="en"><h1>Overview</h1><p class="lead">Connect ChatGPT to the tools you already use.</p><p>CoworkerAPI is a gateway running on your machine with OpenAI-compatible and Anthropic-compatible endpoints. Client requests reach an MCP widget in ChatGPT; completed results are translated into the format your client expects.</p><h2>Request flow</h2><pre><code>Client → CoworkerAPI → ChatGPT MCP widget
+       ← API response ← ChatGPT</code></pre><p>Your client still manages the workspace and runs local tools. CoworkerAPI forwards requests and results; it does not replace the client's permission controls.</p><h2>Get started</h2><ol><li><a href="installation.html">Install from source</a> and open the dashboard.</li><li><a href="multi-tunnel.html">Connect ChatGPT</a> through a tunnel and MCP plugin.</li><li><a href="quickstart.html">Send your first request</a> using a CoworkerAPI key.</li></ol><h2>Supported routes</h2><p>Available routes: <code>POST /v1/responses</code>, <code>POST /v1/chat/completions</code>, <code>POST /v1/messages</code>, and <code>GET /v1/models</code>. The default model alias is <code>chatgpt-web</code>.</p><h2>Current limitations</h2><p>The bridge is experimental. Keep the activation conversation and widget open while using the client. The widget processes requests in sequence. Client SSE events are emitted after a complete result arrives, not as live tokens from ChatGPT.</p><p>CoworkerAPI is not an official ChatGPT API, does not guarantee support for every OpenAI or Anthropic parameter, and does not bypass account limits. Plugin access depends on your account and available ChatGPT features.</p></section>
+<nav class="doc-pager" aria-label="Documentation pages"><span></span><a href="installation.html" data-doc-vi="Cài đặt →" data-doc-en="Installation →">Cài đặt →</a></nav>
+</main></div>
+<footer class="wrap doc-footer"><span>CoworkerAPI</span><p class="muted"><span data-doc-vi="Liên hệ:" data-doc-en="Contact:">Liên hệ:</span> <a href="mailto:hoangdatlnbp@gmail.com">hoangdatlnbp@gmail.com</a></p></footer>
+</body>
+</html>

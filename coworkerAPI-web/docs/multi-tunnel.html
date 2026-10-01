@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="vi" data-doc-page="tunnels">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kết nối ChatGPT — CoworkerAPI</title>
+<meta name="description" content="Thiết lập một tunnel và kích hoạt bridge.">
+<link rel="icon" type="image/png" href="../assets/img/coworker-logo.png">
+<link rel="stylesheet" href="../assets/css/api.css">
+<script src="../assets/js/api-site.js" defer></script>
+<script src="../assets/js/api-docs.js" defer></script>
+</head>
+<body>
+<a class="skip-link" href="#main" data-doc-vi="Đến nội dung" data-doc-en="Skip to content">Đến nội dung</a>
+<header class="topbar wrap">
+<a class="brand" href="../index.html"><img src="../assets/img/coworker-logo.png" width="32" height="32" alt="">CoworkerAPI</a>
+<div class="controls"><a href="../index.html" data-doc-vi="Trang chủ" data-doc-en="Home">Trang chủ</a>
+<label class="sr-only" for="doc-language" data-doc-vi="Ngôn ngữ" data-doc-en="Language">Ngôn ngữ</label>
+<select id="doc-language" data-language aria-label="Language"><option value="vi">VI</option><option value="en">EN</option></select>
+<button type="button" class="theme-toggle" data-theme-toggle aria-label="Toggle color theme"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M20.8 13a9 9 0 1 1-9.8-9.8A7 7 0 0 0 20.8 13Z"/></svg></button></div>
+</header>
+<div class="docs-layout wrap">
+<aside class="docs-nav"><p class="muted" data-doc-vi="Tài liệu" data-doc-en="Documentation">Tài liệu</p><nav aria-label="Documentation"><a href="index.html" data-doc-link="overview" data-doc-vi="Tổng quan" data-doc-en="Overview">Tổng quan</a>
+<a href="installation.html" data-doc-link="install" data-doc-vi="Cài đặt" data-doc-en="Installation">Cài đặt</a>
+<a href="quickstart.html" data-doc-link="quickstart" data-doc-vi="Yêu cầu đầu tiên" data-doc-en="First request">Yêu cầu đầu tiên</a>
+<a href="multi-tunnel.html" data-doc-link="tunnels" data-doc-vi="Kết nối ChatGPT" data-doc-en="Connect ChatGPT">Kết nối ChatGPT</a>
+<a href="multi-account.html" data-doc-link="profiles" data-doc-vi="Cấu hình client" data-doc-en="Client configuration">Cấu hình client</a>
+<a href="security.html" data-doc-link="security" data-doc-vi="Bảo mật" data-doc-en="Security">Bảo mật</a>
+<a href="changelog.html" data-doc-link="changelog" data-doc-vi="Thay đổi" data-doc-en="Changelog">Thay đổi</a></nav></aside>
+<main class="docs-article" id="main" tabindex="-1">
+<section data-doc-locale="vi"><h1>Kết nối ChatGPT</h1><p class="lead">Thiết lập một tunnel và kích hoạt bridge.</p><h2>Thiết lập tunnel</h2><p>ChatGPT cần truy cập endpoint MCP từ bên ngoài máy của bạn. Mở Kết nối trong dashboard và dùng form tunnel để nhập đường dẫn <code>tunnel-client</code>, Tunnel ID và API key theo hướng dẫn hiển thị. Không cần chỉnh <code>.env</code> cho luồng thiết lập thông thường.</p><p>Hướng dẫn trong dashboard có ảnh và link cho từng bước. Khi tạo key trên trang <a href="https://platform.openai.com/api-keys" target="_blank" rel="noopener noreferrer">API keys</a>, chọn Create new secret key, chọn Project và quyền phù hợp với tài khoản. Key này dành cho tunnel; không phải key CoworkerAPI bạn cấp cho client.</p><h2>Thêm plugin</h2><p>Dùng URL MCP do dashboard cung cấp, thay vì tự suy đoán địa chỉ. Trong phần ứng dụng/plugin của ChatGPT, tạo kết nối có tên <strong>CoworkerAPI</strong>. Bật chế độ dành cho nhà phát triển nếu tài khoản yêu cầu.</p><p>Kiểm tra danh sách công cụ có <code>workbench_api_activate</code>. Nếu không thấy, kiểm tra lại endpoint, xác thực MCP và quyền truy cập của tài khoản.</p><h2>Kích hoạt hội thoại</h2><ol><li>Chọn mở bridge trong ChatGPT từ dashboard.</li><li>Trong hội thoại được mở, gửi tin nhắn kích hoạt đã điền sẵn.</li><li>Chờ widget xuất hiện và trạng thái bridge chuyển sang Ready.</li><li>Giữ hội thoại và widget mở trong khi client đang chạy.</li></ol><pre><code>Use the CoworkerAPI plugin tool workbench_api_activate now to open the CoworkerAPI bridge widget in this new chat.</code></pre><h2>Giữ một kết nối hoạt động</h2><p>Hướng dẫn này sử dụng một gateway và một tunnel. Không mở thêm instance có cùng Tunnel ID: callback có thể tới instance không giữ request. Nếu bridge mất kết nối, kiểm tra tunnel rồi mở lại link kích hoạt.</p></section>
+<section data-doc-locale="en" hidden><h1>Connect ChatGPT</h1><p class="lead">Set up one tunnel and activate the bridge.</p><h2>Configure the tunnel</h2><p>ChatGPT needs to reach the MCP endpoint from outside your machine. Open Connections in the dashboard and use the tunnel form to enter the <code>tunnel-client</code> path, Tunnel ID, and API key as directed. The normal setup flow does not require editing <code>.env</code>.</p><p>The dashboard guide includes screenshots and links for each step. On the <a href="https://platform.openai.com/api-keys" target="_blank" rel="noopener noreferrer">API keys page</a>, choose Create new secret key, select a Project, and choose permissions available to your account. This key is for the tunnel, not the CoworkerAPI key issued to clients.</p><h2>Add the plugin</h2><p>Use the MCP URL shown in the dashboard rather than constructing it yourself. In ChatGPT's app/plugin settings, add a connection named <strong>CoworkerAPI</strong>. Enable developer mode if required for your account.</p><p>Confirm that the tool list includes <code>workbench_api_activate</code>. If it is missing, check the endpoint, MCP authentication, and account permissions.</p><h2>Activate a conversation</h2><ol><li>Open the ChatGPT bridge link from the dashboard.</li><li>Send the prefilled activation message in the new conversation.</li><li>Wait for the widget to appear and the bridge status to show Ready.</li><li>Keep the conversation and widget open while your client runs.</li></ol><pre><code>Use the CoworkerAPI plugin tool workbench_api_activate now to open the CoworkerAPI bridge widget in this new chat.</code></pre><h2>Keep one connection active</h2><p>This guide uses one gateway and one tunnel. Do not start another instance with the same Tunnel ID: callbacks may reach an instance that does not hold the request. If the bridge disconnects, check the tunnel and reopen the activation link.</p></section>
+<nav class="doc-pager" aria-label="Documentation pages"><a href="quickstart.html" data-doc-vi="← Yêu cầu đầu tiên" data-doc-en="← First request">← Yêu cầu đầu tiên</a><a href="multi-account.html" data-doc-vi="Cấu hình client →" data-doc-en="Client configuration →">Cấu hình client →</a></nav>
+</main></div>
+<footer class="wrap doc-footer"><span>CoworkerAPI</span><p class="muted"><span data-doc-vi="Liên hệ:" data-doc-en="Contact:">Liên hệ:</span> <a href="mailto:hoangdatlnbp@gmail.com">hoangdatlnbp@gmail.com</a></p></footer>
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="vi" data-doc-page="security">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bảo mật — CoworkerAPI</title>
+<meta name="description" content="Giữ quyền quản trị và thông tin xác thực ở máy local.">
+<link rel="icon" type="image/png" href="../assets/img/coworker-logo.png">
+<link rel="stylesheet" href="../assets/css/api.css">
+<script src="../assets/js/api-site.js" defer></script>
+<script src="../assets/js/api-docs.js" defer></script>
+</head>
+<body>
+<a class="skip-link" href="#main" data-doc-vi="Đến nội dung" data-doc-en="Skip to content">Đến nội dung</a>
+<header class="topbar wrap">
+<a class="brand" href="../index.html"><img src="../assets/img/coworker-logo.png" width="32" height="32" alt="">CoworkerAPI</a>
+<div class="controls"><a href="../index.html" data-doc-vi="Trang chủ" data-doc-en="Home">Trang chủ</a>
+<label class="sr-only" for="doc-language" data-doc-vi="Ngôn ngữ" data-doc-en="Language">Ngôn ngữ</label>
+<select id="doc-language" data-language aria-label="Language"><option value="vi">VI</option><option value="en">EN</option></select>
+<button type="button" class="theme-toggle" data-theme-toggle aria-label="Toggle color theme"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M20.8 13a9 9 0 1 1-9.8-9.8A7 7 0 0 0 20.8 13Z"/></svg></button></div>
+</header>
+<div class="docs-layout wrap">
+<aside class="docs-nav"><p class="muted" data-doc-vi="Tài liệu" data-doc-en="Documentation">Tài liệu</p><nav aria-label="Documentation"><a href="index.html" data-doc-link="overview" data-doc-vi="Tổng quan" data-doc-en="Overview">Tổng quan</a>
+<a href="installation.html" data-doc-link="install" data-doc-vi="Cài đặt" data-doc-en="Installation">Cài đặt</a>
+<a href="quickstart.html" data-doc-link="quickstart" data-doc-vi="Yêu cầu đầu tiên" data-doc-en="First request">Yêu cầu đầu tiên</a>
+<a href="multi-tunnel.html" data-doc-link="tunnels" data-doc-vi="Kết nối ChatGPT" data-doc-en="Connect ChatGPT">Kết nối ChatGPT</a>
+<a href="multi-account.html" data-doc-link="profiles" data-doc-vi="Cấu hình client" data-doc-en="Client configuration">Cấu hình client</a>
+<a href="security.html" data-doc-link="security" data-doc-vi="Bảo mật" data-doc-en="Security">Bảo mật</a>
+<a href="changelog.html" data-doc-link="changelog" data-doc-vi="Thay đổi" data-doc-en="Changelog">Thay đổi</a></nav></aside>
+<main class="docs-article" id="main" tabindex="-1">
+<section data-doc-locale="vi"><h1>Bảo mật</h1><p class="lead">Giữ quyền quản trị và thông tin xác thực ở máy local.</p><h2>Ba loại thông tin xác thực</h2><ul><li><strong>Mật khẩu dashboard:</strong> bảo vệ trang quản trị. Mật khẩu local ban đầu là <code>123456</code>; đặt <code>COWORKER_ADMIN_PASSWORD</code> trước lần chạy đầu tiên để dùng mật khẩu khởi tạo khác. Mật khẩu hiện có được giữ nguyên. Giữ quản trị trên máy local.</li><li><strong>API key CoworkerAPI:</strong> cấp cho client để gọi endpoint. Tạo key riêng cho từng công cụ và thu hồi khi không còn dùng.</li><li><strong>MCP secret và key tunnel:</strong> phục vụ kết nối ChatGPT; không chia sẻ với client hoặc đưa vào ảnh hướng dẫn.</li></ul><h2>Phạm vi mạng</h2><p>Giữ gateway trên <code>127.0.0.1</code> khi chỉ dùng trên một máy. Dùng tunnel cho kết nối ChatGPT. Không công khai dashboard hay mở cổng ra Internet nếu chưa thiết kế xác thực, TLS và giới hạn truy cập phù hợp.</p><h2>Dữ liệu và sao lưu</h2><p>Thông tin xác thực lưu qua dashboard được mã hóa. Sao lưu cấu hình và dữ liệu runtime cùng khóa mã hóa <code>MASTER_ENCRYPTION_KEY</code> ở nơi an toàn. Mất khóa có thể khiến thông tin xác thực đã lưu không giải mã được.</p><p>Không commit <code>.env</code>, thư mục runtime, API key, cookie, session browser, log nhạy cảm hoặc ảnh chụp chứa thông tin xác thực lên GitHub. Kiểm tra nội dung file trước khi chia sẻ log.</p><p>Key tunnel được bảo vệ bằng Windows DPAPI, gắn với tài khoản Windows hiện tại. Bản sao file cấu hình có thể không giải mã được trên tài khoản hoặc máy khác; khi chuyển máy, nhập lại key tunnel. MASTER_ENCRYPTION_KEY dành cho secret provider, không thay thế khóa DPAPI.</p><h2>Quyền thực thi</h2><p>Claude Code và các client có quyền đọc hoặc chạy lệnh theo cơ chế cấp quyền của chính client. Chỉ cho phép thao tác bạn hiểu rõ và tin tưởng. Một endpoint tương thích không tạo sandbox cho tool local.</p><h2>Giới hạn dịch vụ</h2><p>Tuân thủ điều khoản áp dụng cho tài khoản và các dịch vụ kết nối. CoworkerAPI không được OpenAI hoặc Anthropic chứng thực và không cung cấp cách bỏ qua quota, quyền truy cập hay chính sách dịch vụ.</p></section>
+<section data-doc-locale="en" hidden><h1>Security</h1><p class="lead">Keep administration and credentials local.</p><h2>Three credential types</h2><ul><li><strong>Dashboard password:</strong> protects administration. The initial local password is <code>123456</code>; set <code>COWORKER_ADMIN_PASSWORD</code> before the first start for a different initial password. Existing passwords are preserved. Keep administration local.</li><li><strong>CoworkerAPI key:</strong> authorizes client requests. Issue a separate key for each tool and revoke keys you no longer use.</li><li><strong>MCP secret and tunnel key:</strong> connect ChatGPT to the bridge. Do not share these with API clients or include them in guide screenshots.</li></ul><h2>Network exposure</h2><p>Keep the gateway bound to <code>127.0.0.1</code> for single-machine use. Use the tunnel for ChatGPT connectivity. Do not expose the dashboard or open the service to the Internet without appropriate authentication, TLS, and access limits.</p><h2>Data and backups</h2><p>Credentials saved through the dashboard are encrypted. Back up configuration and runtime data together with <code>MASTER_ENCRYPTION_KEY</code> in a secure location. Losing that key can prevent stored credentials from being decrypted.</p><p>Never commit <code>.env</code>, runtime data, API keys, cookies, browser sessions, sensitive logs, or credential-bearing screenshots to GitHub. Review file contents before sharing logs.</p><p>Tunnel keys use Windows DPAPI protection tied to the current Windows user. A copied settings file may not decrypt under another user or machine; re-enter the tunnel key when migrating. MASTER_ENCRYPTION_KEY protects provider secrets and does not replace DPAPI protection.</p><h2>Execution permissions</h2><p>Claude Code and other clients read files or run commands using their own permission controls. Approve only actions you understand and trust. A compatible endpoint does not sandbox local tools.</p><h2>Service boundaries</h2><p>Follow the terms applicable to your account and connected services. CoworkerAPI is not endorsed by OpenAI or Anthropic and does not bypass quotas, access requirements, or service policies.</p></section>
+<nav class="doc-pager" aria-label="Documentation pages"><a href="multi-account.html" data-doc-vi="← Cấu hình client" data-doc-en="← Client configuration">← Cấu hình client</a><a href="changelog.html" data-doc-vi="Thay đổi →" data-doc-en="Changelog →">Thay đổi →</a></nav>
+</main></div>
+<footer class="wrap doc-footer"><span>CoworkerAPI</span><p class="muted"><span data-doc-vi="Liên hệ:" data-doc-en="Contact:">Liên hệ:</span> <a href="mailto:hoangdatlnbp@gmail.com">hoangdatlnbp@gmail.com</a></p></footer>
+</body>
+</html>

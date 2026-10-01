@@ -6,6 +6,8 @@
 
 <p align="center">A local gateway that turns ChatGPT's official MCP connection into OpenAI-compatible and Anthropic-compatible endpoints.</p>
 
+<p align="center"><a href="https://ws-coworkerapi.netlify.app/">Visit the CoworkerAPI website</a> · <a href="https://ws-coworkerapi.netlify.app/docs/">Read the documentation</a></p>
+
 <p align="center"><a href="https://github.com/dat-hoangnguyentuandat/coworkerAPI/releases"><img src="https://img.shields.io/badge/release-1.0.0-111827" alt="Release 1.0.0"></a> <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-111827" alt="MIT license"></a> <a href="https://nodejs.org/"><img src="https://img.shields.io/badge/node-22.14%2B-111827" alt="Node.js 22.14 or newer"></a></p>
 
 CoworkerAPI lets Claude Code, Codex CLI, OpenCode, Cursor, VS Code and other custom-provider clients use a ChatGPT account through standard API surfaces. The ChatGPT web interface remains the upstream connection; CoworkerAPI handles protocol translation, authentication, request lifecycle and MCP callbacks locally.

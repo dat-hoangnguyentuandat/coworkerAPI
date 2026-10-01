@@ -39,6 +39,15 @@ try {
 
   $globalPrefix = (npm prefix -g).Trim()
   if (-not $globalPrefix) { Fail 'Could not locate the global npm command directory.' }
+  $userPath = [Environment]::GetEnvironmentVariable('Path', 'User')
+  $pathEntries = @($userPath -split ';' | Where-Object { $_ })
+  if (-not ($pathEntries | Where-Object { $_.TrimEnd('\') -ieq $globalPrefix.TrimEnd('\') })) {
+    [Environment]::SetEnvironmentVariable('Path', (($pathEntries + $globalPrefix) -join ';'), 'User')
+    if (-not (($env:Path -split ';') | Where-Object { $_.TrimEnd('\') -ieq $globalPrefix.TrimEnd('\') })) {
+      $env:Path = "$globalPrefix;$env:Path"
+    }
+    Write-Host "Added npm global command directory to User PATH: $globalPrefix"
+  }
   $nodeScript = Join-Path $appRoot 'bin/coworkerapi.mjs'
   Set-Content -LiteralPath (Join-Path $globalPrefix 'coworkerapi.cmd') -Encoding ASCII -Value "@echo off`r`nnode `"$nodeScript`" %*`r`n"
   Set-Content -LiteralPath (Join-Path $globalPrefix 'coworkerapi.ps1') -Encoding UTF8 -Value "& node `"$nodeScript`" `$args`r`n"
